@@ -1,0 +1,10 @@
+Dim HORAS As Integer
+Dim MINUTOS As Integer
+Dim SEGUNDOS As Integer
+
+Input HORAS
+MINUTOS = HORAS * 60
+SEGUNDOS = MINUTOS * 60
+Print HORAS
+Print MINUTOS
+Print SEGUNDOS
