@@ -1,41 +1,42 @@
-from abc import ABC, abstractmethod
-
-class IUnidadeDeRede(ABC):
-    @abstractmethod
-    def executar_invasao(self):
-        pass
-
-class Cyberdeck:
-    def __init__(self, modelo):
-        self.modelo = modelo
-
-class OperadorNetrunner(IUnidadeDeRede):
-    def __init__(self, nome, modelo):
+class Persona:
+    def __init__(self, nome, arcano):
         self.nome = nome
-        self.cyberdeck = Cyberdeck(modelo)
+        self.arcano = arcano
 
-    def executar_invasao(self):
-        print(self.nome, "está usando o cyberdeck", self.cyberdeck.modelo, "para quebrar o gelo (ICE) de um servidor.")
+    def invocar(self):
+        print("Persona:", self.nome)
+        print("Arcano:", self.arcano)
 
-class DroneDeVigilancia(IUnidadeDeRede):
-    def __init__(self, codigo):
-        self.codigo = codigo
-
-    def executar_invasao(self):
-        print("Drone", self.codigo, "está interceptando o sinal da rede.")
-
-class CelulaHacker:
-    def __init__(self, nome, membros: list[IUnidadeDeRede]):
+class Aliado:
+    def __init__(self, nome, codinome):
         self.nome = nome
-        self.membros = membros
+        self.codinome = codinome
 
-    def iniciar_ataque(self):
-        print("Célula hacker:", self.nome)
-        for membro in self.membros:
-            membro.executar_invasao()
+class Lider:
+    def __init__(self, codinome):
+        self.codinome = codinome
+        self.persona = Persona("Arsène", "Louco")
+        self._equipe = []
+
+    def recrutar(self, aliado: Aliado):
+        self._equipe.append(aliado)
+
+    def infiltrar(self, palacio):
+        if palacio == "":
+            print("Palácio invadido!")
+        else:
+            print("Palácio de", palacio, "invadido!")
+
+        self.persona.invocar()
+        print("Equipe:")
+
+        for aliado in self._equipe:
+            print(aliado.nome, "-", aliado.codinome)
 
 if __name__ == "__main__":
-    netrunner = OperadorNetrunner("V", "Cyberdeck X")
-    drone = DroneDeVigilancia("D-01")
-    celula = CelulaHacker("Fantasma", [netrunner, drone])
-    celula.iniciar_ataque()
+    aliado1 = Aliado("Ryuji Sakamoto", "Skull")
+    aliado2 = Aliado("Ann Takamaki", "Panther")
+    joker = Lider("Joker")
+    joker.recrutar(aliado1)
+    joker.recrutar(aliado2)
+    joker.infiltrar("")
